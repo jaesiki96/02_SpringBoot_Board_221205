@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>글 작성</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/jquery.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        .boardSave {
+            width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="boardSave mt-lg-5">
+    <h2>글 작성</h2>
+    <form action="/board/save" method="post" name="saveForm">
+        <input type="text" name="boardWriter" id="boardWriter" class="form-control" placeholder="작성자"> <br>
+        <input type="text" name="boardTitle" id="boardTitle" class="form-control" placeholder="제목"> <br>
+        <input type="text" name="boardPass" id="boardPass" class="form-control" placeholder="비밀번호"> <br>
+        <textarea name="boardContents" cols="30" rows="10" placeholder="내용을 입력하세요." class="form-control"></textarea> <br>
+        <input type="button" class="btn btn-primary" onclick="saveButton()" value="작성완료">
+    </form>
+</div>
+</body>
+<script th:inline="javascript">
+    const saveButton = () => {
+        const writer = document.getElementById("boardWriter").value;
+        const title = document.getElementById("boardTitle").value;
+        const pass = document.getElementById("boardPass").value;
+        if (writer == "") {
+            alert("작성자를 입력하세요.")
+        } else if (title == "") {
+            alert("제목을 입력하세요.")
+        } else if (pass == "") {
+            alert("비밀번호를 입력하세요.")
+        } else {
+            document.saveForm.submit();
+        }
+    }
+</script>
+</html>

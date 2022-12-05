@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>글 목록</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <style>
+        table, th, td {
+            border: 1px solid #bcbcbc;
+        }
+
+        table {
+            width: 600px;
+            height: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 200px;
+        }
+
+        tr, td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <th>id</th>
+        <th>writer</th>
+        <th>title</th>
+        <th>pass</th>
+        <th>contents</th>
+    </tr>
+    <tr th:each="board: ${boardList}">
+        <td th:text="${board.id}"></td>
+        <td th:text="${board.boardWriter}"></td>
+        <td>
+            <a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a>
+        </td>
+        <td th:text="${board.boardPass}"></td>
+        <td th:text="${board.boardContents}"></td>
+    </tr>
+</table>
+</body>
+</html>
