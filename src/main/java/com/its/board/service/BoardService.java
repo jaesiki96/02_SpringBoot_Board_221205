@@ -17,8 +17,8 @@ public class BoardService {
 
     // 글 작성
     public Long save(BoardDTO boardDTO) {
-        Long savedId = boardRepository.save(BoardEntity.toSaveEntity(boardDTO)).getId();
-        return savedId;
+        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
+        return boardRepository.save(boardEntity).getId();
     }
 
     // 글 목록
