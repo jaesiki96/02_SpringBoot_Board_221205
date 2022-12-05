@@ -25,7 +25,7 @@ public class BoardController {
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO) {
         boardService.save(boardDTO);
-        return "boardPages/boardList";
+        return "redirect:/board/";
     }
 
     // 글 목록
