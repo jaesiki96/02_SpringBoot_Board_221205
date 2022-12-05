@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -14,6 +16,8 @@ public class BoardDTO {
     private String boardTitle;
     private String boardPass;
     private String boardContents;
+    private LocalDateTime boardCreatedTime;
+    private LocalDateTime boardUpdatedTime;
     private int boardHits;
 
     public static BoardDTO toDTO(BoardEntity boardEntity) {

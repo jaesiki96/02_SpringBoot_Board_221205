@@ -15,13 +15,15 @@
     </style>
 </head>
 <body>
+<th:block th:replace="commonPages/header :: header"></th:block>
 <div class="boardSave mt-lg-5">
     <h2>글 작성</h2>
     <form action="/board/save" method="post" name="saveForm">
         <input type="text" name="boardWriter" id="boardWriter" class="form-control" placeholder="작성자"> <br>
         <input type="text" name="boardTitle" id="boardTitle" class="form-control" placeholder="제목"> <br>
         <input type="text" name="boardPass" id="boardPass" class="form-control" placeholder="비밀번호"> <br>
-        <textarea name="boardContents" cols="30" rows="10" placeholder="내용을 입력하세요." class="form-control"></textarea> <br>
+        <textarea name="boardContents" cols="30" rows="10" placeholder="내용을 입력하세요." class="form-control"></textarea>
+        <br>
         <input type="button" class="btn btn-primary" onclick="saveButton()" value="작성완료">
     </form>
 </div>
