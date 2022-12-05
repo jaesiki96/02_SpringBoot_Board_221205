@@ -1,7 +1,6 @@
 package com.its.board.entity;
 
 import com.its.board.dto.BoardDTO;
-import com.its.board.repository.BoardRepository;
 import lombok.Getter;
 import lombok.Setter;
 
