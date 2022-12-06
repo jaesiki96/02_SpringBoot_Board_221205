@@ -2,48 +2,47 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>글 조회</title>
+    <title>list</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <style>
-        table, th, td {
-            border: 1px solid #bcbcbc;
-        }
-
-        table {
-            width: 600px;
-            height: 200px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 200px;
-        }
-
-        tr, td {
-            text-align: center;
+        #detail {
+            width: 800px;
+            margin-top: 50px;
         }
     </style>
 </head>
 <body>
-<table>
-    <tr>
-        <th>id</th>
-        <td th:text="${board.id}"></td>
-    </tr>
-    <tr>
-        <th>writer</th>
-        <td th:text="${board.boardWriter}"></td>
-    </tr>
-    <tr>
-        <th>title</th>
-        <td th:text="${board.boardTitle}">
-    </tr>
-    <tr>
-        <th>pass</th>
-        <td th:text="${board.boardPass}"></td>
-    </tr>
-    <tr>
-        <th>contents</th>
-        <td th:text="${board.boardContents}"></td>
-    </tr>
-</table>
+<th:block th:replace="commonPages/header :: header"></th:block>
+<div class="container" id="board-detail">
+    <table class="table table-hover">
+        <tr>
+            <th>id</th>
+            <td th:text="${board.id}"></td>
+        </tr>
+        <tr>
+            <th>title</th>
+            <td th:text="${board.boardTitle}"></td>
+        </tr>
+        <tr>
+            <th>writer</th>
+            <td th:text="${board.boardWriter}"></td>
+        </tr>
+        <tr>
+            <th>date</th>
+            <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+        <tr>
+            <th>hits</th>
+            <td th:text="${board.boardHits}"></td>
+        </tr>
+        <tr>
+            <th>contents</th>
+            <td th:text="${board.boardContents}"></td>
+        </tr>
+    </table>
+    <button class="btn btn-primary" onclick="listReq()">목록</button>
+    <button class="btn btn-warning" onclick="updateReq()">수정</button>
+    <button class="btn btn-danger" onclick="deleteReq()">삭제</button>
+</div>
 </body>
 </html>
