@@ -38,7 +38,8 @@ public class BoardController {
 
     // 글 상세조회
     @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    public String findById(@PathVariable Long id, Model model) { // id 값 @PathVariable 데이터를 받아와야 하니깐 Model
+        boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
         return "boardPages/boardDetail";

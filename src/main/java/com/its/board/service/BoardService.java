@@ -5,6 +5,7 @@ import com.its.board.entity.BoardEntity;
 import com.its.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,5 +40,14 @@ public class BoardService {
         } else {
             return null;
         }
+    }
+
+    // 조회수
+    @Transactional
+    // Java → JPA → DB
+    // JPA 는 중간 역할
+    // JPA: JPA 가 가지고 있는 DB 가 남아있다. (JPA 캐시) -> 그래서 동기화가 끝난 후 @Transactional 을 통해 작업 진행..?
+    public void updateHits(Long id) {
+        boardRepository.updateHits(id);
     }
 }
