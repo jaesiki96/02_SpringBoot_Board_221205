@@ -66,9 +66,7 @@ public class BoardController {
 
     // 글 수정(axios)
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable Long id,
-                                 @RequestBody BoardDTO boardDTO) {
-        System.out.println("id = " + id + ", boardDTO = " + boardDTO);
+    public ResponseEntity update(@RequestBody BoardDTO boardDTO) {
         boardService.update(boardDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
