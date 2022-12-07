@@ -50,4 +50,12 @@ public class BoardService {
     public void updateHits(Long id) {
         boardRepository.updateHits(id);
     }
+
+    // 글 수정
+    // 호출 - 가져오기 (중요) ★★★
+    // save (id 가 있기 때문에 update query 로 전환)
+    public void update(BoardDTO boardDTO) {
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
+        boardRepository.save(boardEntity);
+    }
 }

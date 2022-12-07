@@ -52,6 +52,5 @@ public class BoardTest {
         IntStream.rangeClosed(21, 40).forEach(i -> {
             boardService.save(newBoard(i));
         });
-
     }
 }

@@ -3,6 +3,8 @@ package com.its.board.controller;
 import com.its.board.dto.BoardDTO;
 import com.its.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +45,31 @@ public class BoardController {
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
         return "boardPages/boardDetail";
+    }
+
+    // 글 수정 페이지
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        BoardDTO boardDTO = boardService.findById(id);
+        model.addAttribute("board", boardDTO);
+        return "boardPages/boardUpdate";
+    }
+
+    // 글 수정
+    @PostMapping("/update")
+    public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
+        boardService.update(boardDTO);
+        BoardDTO boardDTO1 = boardService.findById(boardDTO.getId());
+        model.addAttribute("board", boardDTO1);
+        return "boardPages/boardDetail";
+    }
+
+    // 글 수정(axios)
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable Long id,
+                                 @RequestBody BoardDTO boardDTO) {
+        System.out.println("id = " + id + ", boardDTO = " + boardDTO);
+        boardService.update(boardDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
