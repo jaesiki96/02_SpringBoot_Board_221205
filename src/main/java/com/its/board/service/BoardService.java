@@ -47,6 +47,7 @@ public class BoardService {
     }
 
     // 글 목록
+    @Transactional
     public List<BoardDTO> findAll() {
         List<BoardEntity> boardEntityList = boardRepository.findAll();
         List<BoardDTO> boardDTOList = new ArrayList<>();
@@ -57,6 +58,7 @@ public class BoardService {
     }
 
     // 상세조회
+    @Transactional // 부모 Entity 에서 자식 Entity 를 직접 가져올 때 필요
     public BoardDTO findById(Long id) {
         Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
         if (optionalBoardEntity.isPresent()) {

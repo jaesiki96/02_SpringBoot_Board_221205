@@ -27,6 +27,7 @@ public class BoardFileEntity extends BaseEntity {
     @JoinColumn(name = "board_id") // 테이블에 생성될 컬럼 이름
     private BoardEntity boardEntity; // 부모 Entity 타입의 필드가 와야함.
 
+    // 자식 Entity 객체를 만들 때 부모 Entity 가 필요하다. ★★
     public static BoardFileEntity toSaveBoardFileEntity(BoardEntity entity, String originalFileName, String storedFileName) {
         BoardFileEntity boardFileEntity = new BoardFileEntity();
         boardFileEntity.setOriginalFileName(originalFileName);
