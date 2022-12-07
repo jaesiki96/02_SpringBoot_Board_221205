@@ -65,6 +65,7 @@ public class BoardController {
     }
 
     // 글 수정(axios)
+    // update: 매개변수 타입이 다르기 때문에 같은 이름으로 매서드를 만들 수 있음 / Overroading
     @PutMapping("/{id}")
     public ResponseEntity update(@RequestBody BoardDTO boardDTO) {
         boardService.update(boardDTO);
