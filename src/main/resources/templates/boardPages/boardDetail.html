@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <title>list</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/axios.min.js}"></script>
     <script th:src="@{/js/jquery.js}"></script>
     <style>
         .boardDetail {
             width: 500px;
-            margin: 0 auto;
+            margin: 10px auto;
             text-align: center;
         }
     </style>
@@ -74,7 +75,15 @@
             if (value == "update") {
                 location.href = "/board/update/" + id;
             } else if (value == "delete") {
-                location.href = "/board/delete/" + id;
+                // location.href = "/board/delete/" + id;
+                axios({
+                    method: "delete",
+                    url: "/board/" + id,
+                }).then(res => {
+                    location.href = "/board/";
+                }).catch(err => {
+                    alert("삭제 실패");
+                })
             }
         } else {
             alert("비밀번호가 일치하지 않습니다.")

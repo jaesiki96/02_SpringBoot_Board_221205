@@ -71,4 +71,19 @@ public class BoardController {
         boardService.update(boardDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    // 글 삭제
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        boardService.delete(id);
+        return "redirect:/board/";
+    }
+
+    // 글 삭제(axios)
+    // 위 GetMapping delete 와 매개변수(@PathVariable Long id) 가 같아서 이름을 deleteByAxios 처럼 다르게 해야한다
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteByAxios(@PathVariable Long id) {
+        boardService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
