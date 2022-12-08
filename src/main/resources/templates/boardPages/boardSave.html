@@ -24,7 +24,8 @@
         <input type="text" name="boardPass" id="boardPass" class="form-control" placeholder="비밀번호"> <br>
         <textarea name="boardContents" cols="30" rows="10" placeholder="내용을 입력하세요." class="form-control"></textarea>
         <br>
-        <input type="file" name="boardFile" class="form-control"> <br>
+        <!--    다중 파일 업로드 -> multiple    -->
+        <input type="file" name="boardFile" class="form-control" multiple> <br>
         <input type="button" class="btn btn-primary" onclick="saveButton()" value="작성완료">
     </form>
 </div>

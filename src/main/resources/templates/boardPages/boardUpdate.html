@@ -16,14 +16,13 @@
 </head>
 <body>
 <th:block th:replace="commonPages/header :: header"></th:block>
-<div class="boardUpdate" id="update-form">
+<div class="container" id="update-form">
     <form action="/board/update" method="post" name="updateForm">
         <input type="hidden" name="id" th:value="${board.id}" class="form-control" readonly>
         writer: <input type="text" name="boardWriter" th:value="${board.boardWriter}" class="form-control" readonly>
         pass: <input type="text" name="boardPass" id="boardPass" class="form-control" placeholder="비밀번호">
         title: <input type="text" name="boardTitle" th:value="${board.boardTitle}" class="form-control">
-        contents: <textarea name="boardContents" cols="30" rows="10" class="form-control"
-                            th:text="${board.boardContents}"></textarea>
+        contents: <textarea name="boardContents" cols="30" rows="10" class="form-control" th:text="${board.boardContents}"></textarea>
         <input type="hidden" name="boardHits" th:value="${board.boardHits}">
         <input type="button" value="수정" onclick="boardUpdate()" class="btn btn-primary">
         <input type="button" value="수정(axios)" onclick="boardUpdateAxios()" class="btn btn-primary">
@@ -31,21 +30,9 @@
 </div>
 </body>
 <script th:inline="javascript">
-    const boardUpdate = () => {
-        const passDB = [[${board.boardPass}]];
-        const pass = document.getElementById("boardPass").value;
-        if (passDB == pass) {
-            document.updateForm.submit();
-        } else {
-            alert("비밀번호가 일치하지 않습니다.")
-        }
-    }
-
     const boardUpdateAxios = () => {
         const id = document.querySelector('input[name="id"]').value;
         const title = document.getElementsByName("boardTitle")[0].value;
-        // const aa = document.querySelector(".aa").value; // .aa 는 class
-        // const aa = document.querySelector("#aa").value; // #aa 는 id
         const writer = document.querySelector('input[name="boardWriter"]').value;
         const pass = document.querySelector('input[name="boardPass"]').value;
         const contents = document.querySelector('input[name="boardContents"]').value;
@@ -70,7 +57,17 @@
                 alert("수정 실패");
             })
         } else {
-            alert("비밀번호가 일치하지 않습니다.")
+            alert("비밀번호 불일치!!");
+        }
+
+    }
+    const boardUpdate = () => {
+        const passDB = [[${board.boardPass}]];
+        const pass = document.getElementById("boardPass").value;
+        if (passDB == pass) {
+            document.updateForm.submit();
+        } else {
+            alert("비밀번호 불일치!!");
         }
     }
 </script>
