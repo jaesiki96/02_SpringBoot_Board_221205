@@ -7,6 +7,8 @@ import com.its.board.repository.BoardFileRepository;
 import com.its.board.repository.BoardRepository;
 import com.its.board.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,9 +55,10 @@ public class BoardService {
     }
 
     // 글 목록
+    // Sort.by(Sort.Direction.DESC,"id" => Entity 에 정의한 id 컬럼을 기준으로 내림차순!
     @Transactional // 부모 Entity 에서 자식 Entity 를 직접 가져올 때 필요
     public List<BoardDTO> findAll() {
-        List<BoardEntity> boardEntityList = boardRepository.findAll();
+        List<BoardEntity> boardEntityList = boardRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
         List<BoardDTO> boardDTOList = new ArrayList<>();
         for (BoardEntity boardEntity : boardEntityList) {
             boardDTOList.add(BoardDTO.toDTO(boardEntity));
@@ -95,4 +98,5 @@ public class BoardService {
     public void delete(Long id) {
         boardRepository.deleteById(id);
     }
+
 }
