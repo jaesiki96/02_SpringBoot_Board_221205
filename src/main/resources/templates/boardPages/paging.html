@@ -39,20 +39,25 @@
         <ul class="pagination justify-content-center">
             <li class="page-item">
                 <!--첫페이지 요청 링크-->
+                                            <!--/board?page-1-->
                 <a class="page-link" th:href="@{/board(page=1)}">
                     <span>First</span>
                 </a>
             </li>
-
+            <!--첫 페이지면 disabled 클래스(bootstrap) 추가-->
             <li th:class="${boardList.first} ? 'disabled'" class="page-item">
                 <!--boardList.first: isFirst()
                     boardList.number: getNumber()-->
+                <!--첫 페이지면 링크 값 # -> link 값에 #은 그 자리에 가만히 있는 것-->
+                <!--즉, 첫 페이지면 가만히 있고, 아니라면 -->
                 <a class="page-link" th:href="${boardList.first} ? '#' : @{/board(page=${boardList.number})}">
+                    <!-- 사용자 3페이지일 < 버튼을 누르면 2페이지로 간다 -> /board?page=2 -->
                     <span><</span> <!-- < -->
                 </a>
             </li>
 
-            <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할 -->
+            <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할
+                    for(int page=startPage; page<=endPage; page++) -->
             <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
                 th:class="${page == boardList.number + 1} ? 'page-item active'" class="page-item">
                 <a class="page-link" th:text="${page}" th:href="@{/board(page=${page})}"></a>
@@ -64,11 +69,13 @@
                 따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
             <li th:class="${boardList.last} ? 'disabled'">
                 <a class="page-link" th:href="${boardList.last} ? '#' : @{/board(page=${boardList.number + 2})}">
+                    <!-- 사용자 3페이지일 > 버튼을 누르면 2페이지로 간다 그래서 +2 를 해주면 4페이지로 간다 -> /board?page=4 -->
                     <span>&gt;</span>
                 </a>
             </li>
 
             <li class="page-item">
+                <!--마지막 페이지 요청 링크-->
                 <a class="page-link" th:href="@{/board(page=${boardList.totalPages})}">
                     <span>Last</span>
                 </a>
