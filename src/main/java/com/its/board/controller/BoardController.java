@@ -1,7 +1,9 @@
 package com.its.board.controller;
 
 import com.its.board.dto.BoardDTO;
+import com.its.board.dto.CommentDTO;
 import com.its.board.service.BoardService;
+import com.its.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import java.util.List;
 @RequestMapping("/board")
 public class BoardController {
     private final BoardService boardService;
+    private final CommentService commentService;
 
     // 글 작성 페이지
     @GetMapping("/save")
@@ -44,6 +47,12 @@ public class BoardController {
     public String findById(@PathVariable Long id, Model model) { // id 값 @PathVariable 데이터를 받아와야 하니깐 Model
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
+        List<CommentDTO> commentDTOList = commentService.findAll(id);
+        if (commentDTOList.size() > 0) {
+            model.addAttribute("commentList", commentDTOList);
+        } else {
+            model.addAttribute("commentList", "empty");
+        }
         model.addAttribute("board", boardDTO);
         return "boardPages/boardDetail";
     }

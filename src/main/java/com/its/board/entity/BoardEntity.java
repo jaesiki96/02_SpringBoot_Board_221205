@@ -37,13 +37,14 @@ public class BoardEntity extends BaseEntity {
 
     // BoardFileEntity 와 참조관계
     // mappedBy: 자식 Entity 에 있는 필드이름
-
     // cascade 부모 데이터가 지워지면 자식 데이터도 지워진다. ★★★
     // fetch = FetchType.LAZY 부모 객체를 조회할때 연관된 자식 객체를 전부 가져옴
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFileEntity> boardFileEntityList = new ArrayList<>();
 
-
+    // CommentEntity 와 참조관계
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
 
     // 글 저장 Entity
     public static BoardEntity toSaveEntity(BoardDTO boardDTO) {

@@ -5,6 +5,7 @@ import com.its.board.entity.BoardEntity;
 import com.its.board.entity.BoardFileEntity;
 import com.its.board.repository.BoardFileRepository;
 import com.its.board.repository.BoardRepository;
+import com.its.board.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,7 @@ public class BoardService {
     // 글 작성
     public Long save(BoardDTO boardDTO) throws IOException {
 //        if (boardDTO.getBoardFile().isEmpty()) {
-        if (boardDTO.getBoardFile().size() == 0) {
+        if (boardDTO.getBoardFile() == null || boardDTO.getBoardFile().size() == 0) {
             System.out.println("파일 없음");
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
             return boardRepository.save(boardEntity).getId();
