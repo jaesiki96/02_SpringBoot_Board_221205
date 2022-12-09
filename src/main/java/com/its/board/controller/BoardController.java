@@ -53,6 +53,7 @@ public class BoardController {
         System.out.println("page" + pageable.getPageNumber());
         Page<BoardDTO> boardDTOList = boardService.paging(pageable);
         model.addAttribute("boardList", boardDTOList);
+        // blockLimit --> 페이징 버튼에 보여지는 페이지 갯수
         int blockLimit = 3;
         int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < boardDTOList.getTotalPages()) ? startPage + blockLimit - 1 : boardDTOList.getTotalPages();

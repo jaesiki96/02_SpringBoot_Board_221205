@@ -5,7 +5,6 @@ import com.its.board.entity.BoardEntity;
 import com.its.board.entity.BoardFileEntity;
 import com.its.board.repository.BoardFileRepository;
 import com.its.board.repository.BoardRepository;
-import com.its.board.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -73,7 +72,8 @@ public class BoardService {
     // limit => 한 페이지에 몇 개씩
     public Page<BoardDTO> paging(Pageable pageable) {
         int page = pageable.getPageNumber() - 1;
-        final int pageLimit = 3;
+        // pageLimit --> 한 페이지에 보여줄 게시글 갯수
+        final int pageLimit = 5;
         Page<BoardEntity> boardEntities = boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
         // Page<BoardEntity> -> Page<BoardDTO> // map --> 옮겨 담아주는 역할
         Page<BoardDTO> boardList = boardEntities.map(
