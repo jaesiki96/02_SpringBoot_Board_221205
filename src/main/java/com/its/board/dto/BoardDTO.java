@@ -2,9 +2,7 @@ package com.its.board.dto;
 
 import com.its.board.entity.BoardEntity;
 import com.its.board.entity.BoardFileEntity;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -14,6 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class BoardDTO {
     private Long id;
     private String boardWriter;
@@ -61,5 +61,17 @@ public class BoardDTO {
             boardDTO.setFileAttached(boardEntity.getFileAttached()); // 0
         }
         return boardDTO;
+    }
+
+    // 페이징 목록 변환을 위한 생성자
+    // boardTitle, boardHits, boardWriter, boardCreatedTime, id  --> 목록에 보여줄 것들
+    // 생성자 자동완성 --> alt + insert
+
+    public BoardDTO(Long id, String boardWriter, String boardTitle, LocalDateTime boardCreatedTime, int boardHits) {
+        this.id = id;
+        this.boardWriter = boardWriter;
+        this.boardTitle = boardTitle;
+        this.boardCreatedTime = boardCreatedTime;
+        this.boardHits = boardHits;
     }
 }

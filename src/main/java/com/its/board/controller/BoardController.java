@@ -5,6 +5,9 @@ import com.its.board.dto.CommentDTO;
 import com.its.board.service.BoardService;
 import com.its.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -41,6 +44,32 @@ public class BoardController {
         model.addAttribute("boardList", boardDTOList);
         return "boardPages/boardList";
     }
+
+    // 페이징 목록 ex) /board?page=1
+    // Pageable => springframework.data.domain.Pageable
+    // @PageableDefault(page = 1) Pageable 이 없으면 기본 페이지를 1페이지로 한다.
+    @GetMapping
+    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
+        System.out.println("page" + pageable.getPageNumber());
+        Page<BoardDTO> boardDTOList = boardService.paging(pageable);
+        model.addAttribute("boardList", boardDTOList);
+        int blockLimit = 3;
+        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = ((startPage + blockLimit - 1) < boardDTOList.getTotalPages()) ? startPage + blockLimit - 1 : boardDTOList.getTotalPages();
+        // 삼항연산자
+//        int test = 10;
+//        int num = (test > 5) ? test: 100;
+//        if (test > 5) {
+//            num = test;
+//        } else {
+//            num = 100;
+//        }
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        return "boardPages/paging";
+    }
+
 
     // 글 상세조회
     @GetMapping("/{id}")

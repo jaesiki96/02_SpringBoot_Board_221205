@@ -7,6 +7,8 @@ import com.its.board.repository.BoardFileRepository;
 import com.its.board.repository.BoardRepository;
 import com.its.board.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -58,12 +60,33 @@ public class BoardService {
     // Sort.by(Sort.Direction.DESC,"id" => Entity 에 정의한 id 컬럼을 기준으로 내림차순!
     @Transactional // 부모 Entity 에서 자식 Entity 를 직접 가져올 때 필요
     public List<BoardDTO> findAll() {
-        List<BoardEntity> boardEntityList = boardRepository.findAll(Sort.by(Sort.Direction.DESC,"id"));
+        List<BoardEntity> boardEntityList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         List<BoardDTO> boardDTOList = new ArrayList<>();
         for (BoardEntity boardEntity : boardEntityList) {
             boardDTOList.add(BoardDTO.toDTO(boardEntity));
         }
         return boardDTOList;
+    }
+
+    // 페이징 목록
+    // page => 1부터 시작 안하고 0부터 시작하기 때문에 1을 뺀다.
+    // limit => 한 페이지에 몇 개씩
+    public Page<BoardDTO> paging(Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;
+        final int pageLimit = 3;
+        Page<BoardEntity> boardEntities = boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        // Page<BoardEntity> -> Page<BoardDTO> // map --> 옮겨 담아주는 역할
+        Page<BoardDTO> boardList = boardEntities.map(
+                // boardEntities  에 담긴 boardEntity 객체를 board 에 담아서
+                // boardDTO 객체로 하나씩 옮겨 담는 과정
+                board -> new BoardDTO(board.getId(),
+                        board.getBoardWriter(),
+                        board.getBoardTitle(),
+                        board.getCreatedTime(),
+                        board.getBoardHits()
+                )
+        );
+        return boardList;
     }
 
     // 상세조회
@@ -98,5 +121,4 @@ public class BoardService {
     public void delete(Long id) {
         boardRepository.deleteById(id);
     }
-
 }
