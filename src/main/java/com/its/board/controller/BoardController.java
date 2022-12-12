@@ -55,7 +55,7 @@ public class BoardController {
         model.addAttribute("boardList", boardDTOList);
         // blockLimit --> 페이징 버튼에 보여지는 페이지 갯수
         int blockLimit = 3;
-        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < boardDTOList.getTotalPages()) ? startPage + blockLimit - 1 : boardDTOList.getTotalPages();
         // 삼항연산자
 //        int test = 10;
@@ -125,5 +125,14 @@ public class BoardController {
     public ResponseEntity deleteByAxios(@PathVariable Long id) {
         boardService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 검색 처리
+    @GetMapping("/search")
+    public String search(@RequestParam("type") String type,
+                         @RequestParam("q") String q, Model model) {
+        List<BoardDTO> searchList = boardService.search(type, q);
+        model.addAttribute("boardList", searchList);
+        return "boardPages/boardList";
     }
 }

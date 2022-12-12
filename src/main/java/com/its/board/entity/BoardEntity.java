@@ -35,6 +35,11 @@ public class BoardEntity extends BaseEntity {
     @Column
     private int fileAttached; // 파일 있으면 1, 파일 없으면 0
 
+    // 회원 - 게시글 연관관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
     // BoardFileEntity 와 참조관계
     // mappedBy: 자식 Entity 에 있는 필드이름
     // cascade 부모 데이터가 지워지면 자식 데이터도 지워진다. ★★★
@@ -47,7 +52,7 @@ public class BoardEntity extends BaseEntity {
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
     // 글 저장 Entity
-    public static BoardEntity toSaveEntity(BoardDTO boardDTO) {
+    public static BoardEntity toSaveEntity(BoardDTO boardDTO, MemberEntity memberEntity) {
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setBoardWriter(boardDTO.getBoardWriter());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
@@ -55,10 +60,12 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardContents(boardDTO.getBoardContents());
         boardEntity.setBoardHits(0);
         boardEntity.setFileAttached(0);
+        boardEntity.setMemberEntity(memberEntity);
         return boardEntity;
     }
 
     // 글 수정 Entity (id, hits 값은 DTO 에서 가져와야 함)
+    // update 처리할 때도 MemberEntity 객체를 고려해야 함.
     public static BoardEntity toUpdateEntity(BoardDTO boardDTO) {
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setId(boardDTO.getId());
@@ -71,7 +78,7 @@ public class BoardEntity extends BaseEntity {
     }
 
     // 파일 저장 Entity
-    public static BoardEntity toSaveFileEntity(BoardDTO boardDTO) {
+    public static BoardEntity toSaveFileEntity(BoardDTO boardDTO, MemberEntity memberEntity) {
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setBoardWriter(boardDTO.getBoardWriter());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
@@ -79,6 +86,7 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardContents(boardDTO.getBoardContents());
         boardEntity.setBoardHits(0);
         boardEntity.setFileAttached(1);
+        boardEntity.setMemberEntity(memberEntity);
         return boardEntity;
     }
 }

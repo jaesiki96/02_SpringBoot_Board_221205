@@ -21,6 +21,11 @@ public class CommentEntity extends BaseEntity {
     @Column(length = 200, nullable = false)
     private String commentContents;
 
+    // 회원 - 게시글 연관관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
     // board_id 참조 (board = 부모 , comment = 자식)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
